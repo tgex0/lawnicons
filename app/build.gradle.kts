@@ -78,7 +78,7 @@ android {
     productFlavors {
         create("app") {
             dimension = "product"
-            resValue("string", "apps_name", "Lawnicons")
+            resValue("string", "apps_name", "Lawnicons SS")
         }
     }
     sourceSets.getByName("app") {
