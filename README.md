@@ -59,13 +59,17 @@ Lawnicons on the Play Store will install as a different app from other sources.
         <img alt="Lawnicons localization on Crowdin" src="https://img.shields.io/badge/Localization-3F9E00?logo=crowdin&logoColor=ffffff"></a>        
 </div> 
 
-### Development
-You can help with issues, please refer to our guidelines. As a thank you, you can get a priority icon request (write us in Discord before you help).
+### Localization
+> [!NOTE]
+> Until summer, you can receive a priority icon request as a reward for helping with localization.
+  
+[Lawnicons localization issue](https://github.com/LawnchairLauncher/lawnicons/issues/3546)
 
-[Support my app](https://github.com/LawnchairLauncher/lawnicons/issues/new?template=support_my_app.yml)
+### Development
+You can help with issues, please refer to our guidelines. As a thank you, you can get a priority icon request (write to us before you help).
 
 ### Icons
-You may add missing icons if they are of high quality, with no more than 5 icons per pull request. It's essential to follow the Lawnicons design guidelines.
+You may add missing icons if they are of high quality, with no more than 5 icons per pull request. It's essential to follow the Lawnicons design guidelines. 
 
 > [!NOTE]
 > Each 5‑icon PR approved and merged on the first try fulfills [5 simple community requests](https://lawnicons-requests.vercel.app/?filters=easy).
@@ -73,8 +77,6 @@ You may add missing icons if they are of high quality, with no more than 5 icons
 ### Icon requests
 
 `Open Lawnicons → Tap "Request icons" → Select and request icons`
-
-People add new icons for two reasons: some enjoy creating random icons, while others don't want to wait years for the ones they need. The waiting time is in your hands — learn the Lawnicons guidelines and add icons yourself. The quality bar is high.
 
 > [!TIP]
 > Fund community requests [on Open Collective](https://opencollective.com/lawnchair/projects/lawnicons).
