@@ -4,7 +4,7 @@ kotlin = "2.3.21"
 androidx-nav3 = "1.1.1"
 androidx-lifecycle = "2.10.0"
 retrofit = "3.0.0"
-metro = "1.0.0-RC3"
+metro = "1.0.0-RC4"
 
 [libraries]
 androidx-core-ktx = "androidx.core:core-ktx:1.18.0"
@@ -38,7 +38,7 @@ commons-io = "commons-io:commons-io:2.22.0"
 
 # Dummy to get renovate updates, the version is used in rootProject build.gradle with spotless.
 ktlint = "com.pinterest.ktlint:ktlint-cli:1.8.0"
-composeRules = "io.nlopez.compose.rules:ktlint:0.5.7"
+composeRules = "io.nlopez.compose.rules:ktlint:0.5.8"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -79,8 +79,7 @@ It's required to follow the Lawnicons design guidelines. Accepted contributions 
 
 `Open Lawnicons → Tap "Request icons" → Select and request icons`
 
-> [!NOTE]
-> Open an issue if you know of an icon pack that contains the Lawnicons icon, but Lawnicons doesn't contain that pack's icon yet. Please include the icon pack name, its app ID, and a reference of what the Lawnicons icon looks like. It will be added.  
+Icon requests become available on the Lawnicons release day and stay open for a short while. That said, anyone can become a contributor and add icons. It takes some learning, but it's doable.
 
-> [!TIP]
-> Fund community requests [on Open Collective](https://opencollective.com/lawnchair/projects/lawnicons).
+> [!NOTE]
+> Open an issue if you know of an icon pack that contains the Lawnicons icon, but Lawnicons doesn't contain that pack's icon yet.
