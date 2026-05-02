@@ -45,7 +45,7 @@ Lawnicons on the Play Store will install as a different app from other sources.
 ## Supporting
 
 > [!IMPORTANT]
-> Sustain Lawnicons by backing the Lawnchair team. Your support helps us maintain Lawnicons, add new icons, and review PRs. If you're a backer or a sponsor, don't forget to submit your icon request for higher priority.
+> Sustain Lawnicons by backing the Lawnchair team. Your support helps us maintain Lawnicons, add new icons, and review PRs. Supporter icon requests have higher priority.
 
 [Support on Open Collective](https://opencollective.com/lawnchair) • [Sponsor on GitHub](https://github.com/sponsors/LawnchairLauncher) • [Submit supporter request](https://github.com/LawnchairLauncher/lawnicons/issues/new?template=submit_supporter_request.yml)
 
@@ -55,15 +55,9 @@ Lawnicons on the Play Store will install as a different app from other sources.
         <img alt="Lawnicons guidelines" src="https://img.shields.io/badge/Lawnicons%20guidelines-3F9E00?logo=gitbook&logoColor=ffffff"></a>
     <a href="https://lawnicons-requests.vercel.app/">
         <img alt="Requested icons" src="https://img.shields.io/badge/Requested%20icons-94009E?logo=vercel&logoColor=ffffff"></a>
-    <a href="https://lawnchair.crowdin.com/lawnicons">
-        <img alt="Lawnicons localization on Crowdin" src="https://img.shields.io/badge/Localization-3F9E00?logo=crowdin&logoColor=ffffff"></a>        
+    <a href="https://github.com/LawnchairLauncher/lawnicons/issues/3546">
+        <img alt="Lawnicons localization issue" src="https://img.shields.io/badge/Localization-3F9E00?logo=crowdin&logoColor=ffffff"></a>        
 </div> 
-
-### Localization
-
-Contribute to Lawnicons localization and earn a priority icon request.
-  
-[Lawnicons localization issue](https://github.com/LawnchairLauncher/lawnicons/issues/3546)
 
 ### Development
 You're welcome to work on our issues. Contributors can get a priority icon request—write to us before you help.
