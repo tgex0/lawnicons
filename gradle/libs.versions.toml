@@ -1,5 +1,5 @@
 [versions]
-agp = "9.2.0"
+agp = "9.2.1"
 kotlin = "2.3.21"
 androidx-nav3 = "1.1.1"
 androidx-lifecycle = "2.10.0"
@@ -10,7 +10,7 @@ metro = "1.0.0"
 androidx-core-ktx = "androidx.core:core-ktx:1.18.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0"
 androidx-activity-compose = "androidx.activity:activity-compose:1.13.0"
-androidx-compose-bom = "androidx.compose:compose-bom:2026.04.01"
+androidx-compose-bom = "androidx.compose:compose-bom:2026.05.00"
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
@@ -32,7 +32,7 @@ coil-svg = "io.coil-kt:coil-svg:2.7.0"
 lazycolumn-scrollbar = "com.github.nanihadesuka:LazyColumnScrollbar:2.2.0"
 material-motion-compose-core = "io.github.fornewid:material-motion-compose-core:2.0.1"
 metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
-android-tools-sdk-common = "com.android.tools:sdk-common:32.2.0"
+android-tools-sdk-common = "com.android.tools:sdk-common:32.2.1"
 dom4j = "org.dom4j:dom4j:2.2.0"
 commons-io = "commons-io:commons-io:2.22.0"
 
