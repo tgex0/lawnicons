@@ -21,11 +21,17 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
+
+      - name: Fetch base ref
+        run: |
+          git remote add upstream https://github.com/${{ github.repository }}.git
+          git fetch upstream ${{ github.event.pull_request.base.ref }}          
       
       - name: Get changed files
         id: files
-        uses: tj-actions/changed-files@v46
+        uses: tj-actions/changed-files@v47
         with:
+          base_sha: ${{ github.event.pull_request.base.sha }}
           files: |
             svgs/*
             app/assets/appfilter.xml
@@ -46,14 +52,14 @@ jobs:
             const svgModified = modifiedFiles.filter(f => f.endsWith('.svg') && f.startsWith('svgs/'));
             const appfilterChanged = changedFiles.includes('app/assets/appfilter.xml');
             
-            const { execSync } = require('child_process');
+            const { execFileSync } = require('child_process');
             const baseSha = context.payload.pull_request.base.sha;            
             
             let addedEntries = [];
             let linkedEntries = [];
             
             if (appfilterChanged) {
-              const diff = execSync(`git diff ${baseSha} -- app/assets/appfilter.xml`, { encoding: 'utf8' });
+              const diff = execFileSync('git', ['diff', baseSha, '--', 'app/assets/appfilter.xml'], { encoding: 'utf8' });
               const lines = diff.split('\n');
               
               const addedLines = lines.filter(line => line.startsWith('+') && !line.startsWith('+++'));
@@ -85,10 +91,10 @@ jobs:
                                      linkedEntries.some(e => e.drawable === drawable);
               
               if (!alreadyHandled) {
-                const baseHasDrawable = execSync(
-                  `git show ${baseSha}:app/assets/appfilter.xml | grep -q "drawable=\\"${drawable}\\"" && echo "true" || echo "false"`,
-                  { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 }
-                ).trim() === 'true';
+                const appfilterAtBase = execFileSync(
+                  'git', ['show', `${baseSha}:app/assets/appfilter.xml`],
+                  { encoding: 'utf8', maxBuffer: 10 * 1024 * 1024 });
+                const baseHasDrawable = appfilterAtBase.includes(`drawable="${drawable}"`);
                 
                 if (!baseHasDrawable) {
                   const appfilterContent = require('fs').readFileSync('app/assets/appfilter.xml', 'utf8');

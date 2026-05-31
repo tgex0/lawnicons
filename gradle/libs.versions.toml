@@ -16,7 +16,7 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-material3 = "androidx.compose.material3:material3:1.5.0-alpha18"
+androidx-compose-material3 = "androidx.compose.material3:material3:1.5.0-alpha20"
 androidx-compose-material3-windowsizeclass = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-graphics-shapes = "androidx.graphics:graphics-shapes:1.1.0"
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "androidx-nav3" }
@@ -40,11 +40,17 @@ commons-io = "commons-io:commons-io:2.22.0"
 ktlint = "com.pinterest.ktlint:ktlint-cli:1.8.0"
 composeRules = "io.nlopez.compose.rules:ktlint:0.5.9"
 
+# Test frameworks
+junit = "junit:junit:4.13.2"
+mockito = "org.mockito:mockito-core:5.23.0"
+mockito-kotlin = "org.mockito.kotlin:mockito-kotlin:6.3.0"
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 licensee = "app.cash.licensee:1.14.1"
-spotless = "com.diffplug.spotless:8.5.1"
+spotless = "com.diffplug.spotless:8.6.0"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }

@@ -23,7 +23,7 @@ val version = "2.17.1"
 val versionDisplayName = version + if (!isReleaseBuild) " $devReleaseName" else ""
 
 android {
-    compileSdk = 36
+    compileSdk = 37
     namespace = "app.lawnchair.lawnicons"
 
     defaultConfig {
@@ -99,6 +99,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources = true
+    }
 }
 
 androidComponents {
@@ -157,6 +161,12 @@ dependencies {
     implementation(libs.coil.svg)
     implementation(libs.lazycolumn.scrollbar)
     implementation(libs.material.motion.compose.core)
+
+    // Unit tests
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 tasks.preBuild {
