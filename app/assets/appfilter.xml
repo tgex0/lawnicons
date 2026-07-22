@@ -379,6 +379,7 @@
   <item component="ComponentInfo{com.groundspeak.react.adventures/com.groundspeak.react.adventures.MainActivity}" drawable="adventure_lab" name="Adventure Lab" />
   <item component="ComponentInfo{com.beemdevelopment.aegis/com.beemdevelopment.aegis.ui.AuthActivity}" drawable="aegis_authenticator" name="Aegis Authenticator" />
   <item component="ComponentInfo{com.beemdevelopment.aegis/com.beemdevelopment.aegis.ui.MainActivity}" drawable="aegis_authenticator" name="Aegis Authenticator" />
+  <item component="ComponentInfo{com.shapeshed.aerial/com.shapeshed.aerial.MainActivity}" drawable="aerial" name="Aerial" />
   <item component="ComponentInfo{xyz.aethersx2.android/xyz.aethersx2.android.MainActivity}" drawable="aethersx2" name="AetherSX2" />
   <item component="ComponentInfo{tr.gov.icisleri.afad/tr.gov.icisleri.afad.ui.activities.SplashActivity}" drawable="afad_acil_cagri" name="Afad Acil Çağrı" />
   <item component="ComponentInfo{app.affine.pro/app.affine.pro.MainActivity}" drawable="affine" name="AFFiNE" />
@@ -650,6 +651,7 @@
   <item component="ComponentInfo{akylas.alpi.maps/akylas.alpi.maps.MainActivity}" drawable="alpi_maps" name="Alpi Maps" />
   <item component="ComponentInfo{akylas.alpi.maps/com.tns.NativeScriptActivity}" drawable="alpi_maps" name="Alpi Maps" />
   <item component="ComponentInfo{no.alt.www.twa/no.alt.www.twa.LauncherActivity}" drawable="alt" name="ALT" />
+  <item component="ComponentInfo{com.alta/com.alta.MainActivity}" drawable="alta_daily" name="Alta Daily" />
   <item component="ComponentInfo{ro.altex.mobile/ro.altex.mobile.MainActivity}" drawable="altex" name="Altex" />
   <item component="ComponentInfo{com.noodlecake.altosadventure/com.prime31.UnityPlayerNativeActivity}" drawable="altos_adventure" name="Alto's Adventure" />
   <item component="ComponentInfo{com.noodlecake.altosadventure/com.unity3d.player.UnityPlayerActivity}" drawable="altos_adventure" name="Alto's Adventure" />
@@ -1117,6 +1119,7 @@
   <item component="ComponentInfo{com.donnnno.arcticons.you.play/com.donnnno.arcticons.activities.MainActivity}" drawable="arcticons_material_you_icons" name="Arcticons Material You Icons" />
   <item component="ComponentInfo{com.donnnno.arcticons.you/com.donnnno.arcticons.activities.MainActivity}" drawable="arcticons_material_you_icons" name="Arcticons Material You Icons" />
   <item component="ComponentInfo{com.donnnno.arcticons.you/com.donnnno.arcticons.activities.SplashActivity}" drawable="arcticons_material_you_icons" name="Arcticons Material You Icons" />
+  <item component="ComponentInfo{com.steelseries.arctiscompanion/com.steelseries.arctiscompanion.activities.MainActivity}" drawable="arctis" name="Arctis" />
   <item component="ComponentInfo{de.ard.audiothek/de.ard.audiothek.MainActivity}" drawable="ard_mediathek" name="ARD Audiothek" />
   <item component="ComponentInfo{de.swr.avp.ard/de.ard.ardmediathek.ui.main.MainActivity}" drawable="ard_mediathek" name="ARD Mediathek" />
   <item component="ComponentInfo{de.swr.avp.ard/de.swr.avp.ard.MainActivity}" drawable="ard_mediathek" name="ARD Mediathek" />
@@ -1390,6 +1393,7 @@
   <item component="ComponentInfo{com.github.axet.callrecorder/com.github.axet.callrecorder.activities.MainActivitycom.github.axet.callrecorder}" drawable="generic_dialer" name="Axet's Call Recorder" />
   <item component="ComponentInfo{com.daamitt.walnut.app/com.daamitt.walnut.app.mainactivity.MainActivity}" drawable="axio" name="axio" />
   <item component="ComponentInfo{com.daamitt.walnut.app/com.daamitt.walnut.app.MainActivity}" drawable="axio" name="axio" />
+  <item component="ComponentInfo{com.android.axion.sandbox/com.android.axion.sandbox.MainActivity}" drawable="axion_os_sandbox" name="Axion OS Sandbox" />
   <item component="ComponentInfo{com.axis.mobile/com.axis.mobile.MainActivity}" drawable="axis_bank" name="Axis Bank" />
   <item component="ComponentInfo{com.axis.net/com.axis.net.SplashScreenActivity}" drawable="axisnet" name="AXISnet" />
   <item component="ComponentInfo{com.axis.net/com.axis.net.ui.splashLogin.SplashActivity}" drawable="axisnet" name="AXISnet" />
@@ -3544,6 +3548,8 @@
   <item component="ComponentInfo{com.pranshulgg.clockmaster/com.pranshulgg.clockmaster.MainActivity}" drawable="desk_clock" name="Clock Master" />
   <item component="ComponentInfo{rk.android.app.clockwidget/rk.android.app.clockwidget.activity.HomeActivity}" drawable="clock_widget" name="Clock Widget" />
   <item component="ComponentInfo{com.bnyro.clock/com.bnyro.clock.ui.MainActivity}" drawable="generic_clock" name="Clock You" />
+  <item component="ComponentInfo{com.bnyro.clock/com.bnyro.clock.ui.MainActivityDefault}" drawable="generic_clock" name="Clock You" />
+  <item component="ComponentInfo{com.bnyro.clock/com.bnyro.clock.ui.MainActivityAlternative}" drawable="generic_clock" name="Clock You" />
   <item component="ComponentInfo{me.clockify.android/me.clockify.android.presenter.screens.main.MainActivity}" drawable="clockify" name="Clockify" />
   <item component="ComponentInfo{com.pengyou.cloneapp/com.pengyou.cloneapp.SplashActivity}" drawable="clone_app" name="Clone App" />
   <item component="ComponentInfo{com.srylain.CloneHero/com.unity3d.player.UnityPlayerActivity}" drawable="clone_hero" name="Clone Hero" />
@@ -4718,6 +4724,7 @@
   <item component="ComponentInfo{com.dropbox.android/com.dropbox.android.activity.DbxMainActivity}" drawable="dropbox" name="Dropbox" />
   <item component="ComponentInfo{com.dropbox.android/com.dropbox.android.activity.DropboxBrowser}" drawable="dropbox" name="Dropbox" />
   <item component="ComponentInfo{com.dropbox.android/com.dropbox.android.FileBrowser}" drawable="dropbox" name="Dropbox" />
+  <item component="ComponentInfo{com.dropbox.dash/com.dropbox.dash.auth.impl.view.AuthActivity}" drawable="dropbox" name="Dropbox Dash" />
   <item component="ComponentInfo{com.collegehumor.chdropout/tv.vhx.LauncherActivity}" drawable="dropout" name="Dropout" />
   <item component="ComponentInfo{com.languagedrops.drops.international/com.languagedrops.drops.international.MainActivity}" drawable="drops" name="Drops" />
   <item component="ComponentInfo{org.yoki.android.drops/org.yoki.android.buienalarm.activity.LaunchActivity}" drawable="buienalarm" name="Drops" />
@@ -5508,6 +5515,7 @@
   <item component="ComponentInfo{com.fidosolutions.myaccount/com.fido.genesis.ui.splash.SplashActivity}" drawable="fido" name="Fido" />
   <item component="ComponentInfo{nl.vv.fietsknoop/nl.vv.fietsknoop.StartActivity}" drawable="fietsknoop" name="Fietsknoop" />
   <item component="ComponentInfo{com.fifa.plus.android/com.fifa.mobile.SplashActivity}" drawable="fifa_plus" name="FIFA+" />
+  <item component="ComponentInfo{com.wgkammerer.testgui.basiccharactersheet.app/com.wgkammerer.testgui.basiccharactersheet.app.MainActivity}" drawable="fifth_edition_character_sheet" name="Fifth Edition Character Sheet" />
   <item component="ComponentInfo{com.fig/com.fig.MainActivity}" drawable="fig" name="Fig" />
   <item component="ComponentInfo{com.figma.mirror/com.figma.figma.MainActivity2}" drawable="figma" name="Figma" />
   <item component="ComponentInfo{com.figma.mirror/com.figma.figma.MainActivity}" drawable="figma" name="Figma" />
@@ -6291,6 +6299,7 @@
   <item component="ComponentInfo{com.fox2code.mmm.fdroid/com.fox2code.mmm.MainActivity}" drawable="foxs_magisk_module_manager" name="Fox's Magisk Module Manager" />
   <item component="ComponentInfo{com.fox2code.mmm/com.fox2code.mmm.MainActivity}" drawable="foxs_magisk_module_manager" name="Fox's Magisk Module Manager" />
   <item component="ComponentInfo{com.fox.foxapp/com.fox.foxapp.ui.activity.LauncherLogActivity}" drawable="foxcloud" name="FoxCloud" />
+  <item component="ComponentInfo{com.fox.foxapp.two/com.fox.foxcloud.ui.view.main.new_register.LauncherActivity}" drawable="foxcloud" name="FoxCloud2.0" />
   <item component="ComponentInfo{com.foxit.mobile.pdf.lite/com.fuxin.app.frame.AppActivity}" drawable="foxit" name="Foxit" />
   <item component="ComponentInfo{com.foxit.mobile.pdf.lite/com.fx.app.ui.AppActivity}" drawable="foxit" name="Foxit" />
   <item component="ComponentInfo{nya.kitsunyan.foxydroid/nya.kitsunyan.foxydroid.MainActivity}" drawable="foxy_droid" name="Foxy Droid" />
@@ -10116,6 +10125,8 @@
   <item component="ComponentInfo{at.rsg.pfp/at.rsg.pfp.screens.login.LoginActivity}" drawable="raiffeisen_bank" name="Mein ELBA" />
   <item component="ComponentInfo{at.tmobile.android.myt/com.telekom.oneapp.launcher.components.launcher.LauncherActivity}" drawable="t_mobile" name="Mein Magenta" />
   <item component="ComponentInfo{de.otelo.android/de.otelo.android.ui.activities.MainOteloActivity}" drawable="mein_otelo" name="Mein otelo" />
+  <item component="ComponentInfo{de.elster.elsterapp.release/de.elster.elsterapp.MainActivity}" drawable="meinelster_plus" name="MeinELSTER+" />
+  <item component="ComponentInfo{de.elster.elsterapp.release/de.elster.elsterapp.release.MeinElsterApp}" drawable="meinelster_plus" name="MeinELSTER+" />
   <item component="ComponentInfo{at.itsv.mobile.meinesvstatus/at.itsv.mobile.meinesvstatus.LauncherActivity}" drawable="meine_sv" name="MeineSV" />
   <item component="ComponentInfo{de.telekom.android.customercenter/de.telekom.android.customercenter.ui.activities.MainActivity}" drawable="t_mobile" name="MeinMagenta" />
   <item component="ComponentInfo{de.telekom.android.customercenter/com.telekom.oneapp.launcher.components.launcher.LauncherActivity}" drawable="t_mobile" name="MeinMagenta" />
@@ -10851,6 +10862,8 @@
   <item component="ComponentInfo{app.morphe.manager/app.revanced.manager.MainActivity_Dark_2}" drawable="morphe" name="Morphe" />
   <item component="ComponentInfo{app.morphe.manager/app.morphe.manager.MainActivity_Dark_2}" drawable="morphe" name="Morphe" />
   <item component="ComponentInfo{app.morphe.manager/app.morphe.manager.MainActivity_Default}" drawable="morphe" name="Morphe" />
+  <item component="ComponentInfo{app.morphe.manager/app.morphe.manager.MainActivity_Light_2}" drawable="morphe" name="Morphe" />
+  <item component="ComponentInfo{app.morphe.manager/app.morphe.manager.MainActivity_Light_3}" drawable="morphe" name="Morphe" />
   <item component="ComponentInfo{app.morphe.manager/app.revanced.manager.MainActivity_Dark_1}" drawable="morphe" name="Morphe" />
   <item component="ComponentInfo{app.morphe.manager/app.revanced.manager.MainActivity_Dark_3}" drawable="morphe" name="Morphe" />
   <item component="ComponentInfo{app.morphe.manager/app.morphe.manager.MainActivity_Dark_3}" drawable="morphe" name="Morphe" />
@@ -15061,7 +15074,6 @@
   <item component="ComponentInfo{com.inspiredsquare.sand.blast/com.google.firebase.MessagingUnityPlayerActivity}" drawable="sand_blast" name="Sand Blast" />
   <item component="ComponentInfo{smellymoo.sand/smellymoo.sand.Main}" drawable="sand_box" name="sand:box" />
   <item component="ComponentInfo{sandbox.art.sandbox/sandbox.art.sandbox.activities.SplashV31Activity}" drawable="sandbox" name="Sandbox" />
-  <item component="ComponentInfo{com.android.axion.sandbox/com.android.axion.sandbox.MainActivity}" drawable="axion_os_sandbox" name="Axion OS Sandbox" />
   <item component="ComponentInfo{fun.sandstorm/fun.sandstorm.SplashActivity}" drawable="sandstorm" name="Sandstorm" />
   <item component="ComponentInfo{com.popcore.makesandwich/com.google.firebase.MessagingUnityPlayerActivity}" drawable="sandwich" name="Sandwich!" />
   <item component="ComponentInfo{uk.co.santander.santanderUK/es.bancosantander.apps.mobile.android.activities.PublicActivity}" drawable="santander" name="Santander" />
@@ -17113,6 +17125,7 @@
   <item component="ComponentInfo{com.github.catfriend1.syncthingandroid/com.nutomic.syncthingandroid.activities.MainActivity}" drawable="syncthing" name="Syncthing" />
   <item component="ComponentInfo{com.github.catfriend1.syncthingandroid/com.nutomic.syncthingandroid.activities.PhotoShootActivity}" drawable="syncthing" name="Syncthing" />
   <item component="ComponentInfo{com.github.catfriend1.syncthingfork/com.nutomic.syncthingandroid.activities.FirstStartActivity}" drawable="syncthing" name="Syncthing" />
+  <item component="ComponentInfo{com.github.catfriend1.syncthingfork/com.nutomic.syncthingandroid.onboarding.OnboardingActivity}" drawable="syncthing" name="Syncthing" />
   <item component="ComponentInfo{com.nutomic.syncthingandroid/com.nutomic.syncthingandroid.activities.FirstStartActivity}" drawable="syncthing" name="Syncthing" />
   <item component="ComponentInfo{com.nutomic.syncthingandroid/com.nutomic.syncthingandroid.activities.MainActivity}" drawable="syncthing" name="Syncthing" />
   <item component="ComponentInfo{com.github.catfriend1.syncthingandroid.debug/com.nutomic.syncthingandroid.activities.FirstStartActivity}" drawable="syncthing" name="Syncthing Debug" />
