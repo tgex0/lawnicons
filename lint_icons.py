@@ -1,15 +1,16 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import logging
 import re
 import sys
 import time
-import logging
-import argparse
-import json
-import xml.etree.ElementTree as ET # lint: ignore
-from pathlib import Path
-from enum import Enum, IntEnum
-from dataclasses import dataclass, field, asdict
-from concurrent.futures import ProcessPoolExecutor
+import xml.etree.ElementTree as ET
 from abc import ABC, abstractmethod
+from concurrent.futures import ProcessPoolExecutor
+from dataclasses import dataclass, field, asdict
+from enum import Enum, IntEnum
+from pathlib import Path
 from typing import Callable, List, Dict, Optional, Any, Type
 
 try:
@@ -34,9 +35,12 @@ class Status(Enum):
 
 
 class Speed(IntEnum):
-    FAST = 1     # Regex / String only
-    MEDIUM = 2   # XML Tree
-    SLOW = 3     # svgelements / Geometry
+    # Regex / String only
+    FAST = 1
+    # XML Tree
+    MEDIUM = 2
+    # svgelements / Geometry
+    SLOW = 3
 
 
 @dataclass(frozen=True)
@@ -75,10 +79,12 @@ RULES_REGISTRY: List[tuple[Callable, RuleDefinition]] = []
 
 def register_rule(id: str, name: str, outcomes: Any, description: str = "", category: str = "Core"):
     """Decorator to register a rule with structured outcomes."""
+
     def decorator(func):
         rule_def = RuleDefinition(id, name, description, outcomes, category)
         RULES_REGISTRY.append((func, rule_def))
         return func
+
     return decorator
 
 
@@ -105,13 +111,16 @@ class FileReport:
     def has_failure(self):
         return any(r.status == Status.FAIL for r in self.results)
 
+
 # --- Helper Functions ---
 STYLE_PAIR_RE = re.compile(r'([\w-]+)\s*:\s*([^;]+)')
+
 
 def parse_style_attribute(style_str: Optional[str]) -> Dict[str, str]:
     if not style_str:
         return {}
     return {k: v.strip() for k, v in STYLE_PAIR_RE.findall(style_str.lower())}
+
 
 # --- Rules Implementation ---
 
@@ -121,6 +130,7 @@ class C01Outcomes:
     WRONG_SIZE = Outcome("WRONG_SIZE", "Wrong canvas size", "canvas: {width}×{height} px")
     MISSING = Outcome("MISSING", "No canvas", "no canvas")
     MALFORMED = Outcome("MALFORMED", "Malformed viewBox", "canvas: malformed viewBox '{vb}'")
+
 
 @register_rule(
     id="C01",
@@ -151,17 +161,20 @@ def rule_canvas_size(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return [Finding(C01Outcomes.WRONG_SIZE, {"width": w or "?", "height": h or "?"})]
 
 
-@register_rule(id="C02", name="Icon too small", outcomes={}, description="Checks if icons are too small.")
+@register_rule(id="C02", name="Icon too small", outcomes={},
+               description="Checks if icons are too small.")
 def rule_placeholder_too_small(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return []
 
 
-@register_rule(id="C03", name="Outside content", outcomes={}, description="Checks for elements outside the content area.")
+@register_rule(id="C03", name="Outside content", outcomes={},
+               description="Checks for elements outside the content area.")
 def rule_placeholder_outside_content(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return []
 
 
-@register_rule(id="C04", name="Square size", outcomes={}, description="Checks size of square icons.")
+@register_rule(id="C04", name="Square size", outcomes={},
+               description="Checks size of square icons.")
 def rule_placeholder_square_size(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return []
 
@@ -170,13 +183,14 @@ class C05Outcomes:
     FORBIDDEN_EFFECT = Outcome("FORBIDDEN_EFFECT", "Forbidden effect", "{effect}: yes")
     OPACITY = Outcome("OPACITY", "Opacity", "opacity: {opacity}%")
 
+
 @register_rule(
     id="C05",
-    name="Transparency",
+    name="Effects",
     description="Bans transparency and opacity effects.",
     outcomes=C05Outcomes
 )
-def rule_transparency(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
+def rule_effects(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     if max_speed < Speed.MEDIUM or ctx.xml_tree is None:
         return []
 
@@ -196,7 +210,16 @@ def rule_transparency(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
         except ValueError:
             return None
 
+    effects = set()
+    opacities = set()
+
     for el in ctx.xml_tree.iter():
+        tag = el.tag.split('}')[-1]
+        if tag == 'filter':
+            effects.add('filter')
+        elif tag.startswith('fe'):
+            effects.add('shadow or effect')
+
         for attr in forbidden_attrs:
             val = el.get(attr)
             if not val:
@@ -206,13 +229,13 @@ def rule_transparency(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
             if 'opacity' in attr:
                 opacity_pct = parse_opacity(normalized)
                 if opacity_pct is not None:
-                    findings.append(Finding(C05Outcomes.OPACITY, {"opacity": opacity_pct}))
+                    opacities.add(opacity_pct)
                 continue
 
             if attr == 'filter':
-                findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": "shadow" if "shadow" in normalized or "blur" in normalized else "filter"}))
+                effects.add("shadow or effect" if any(x in normalized for x in ["shadow", "blur"]) else "filter")
             else:
-                findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": attr}))
+                effects.add(attr)
 
         style_val = el.get('style')
         if style_val:
@@ -225,13 +248,25 @@ def rule_transparency(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
                 if 'opacity' in prop:
                     opacity_pct = parse_opacity(normalized)
                     if opacity_pct is not None:
-                        findings.append(Finding(C05Outcomes.OPACITY, {"opacity": opacity_pct}))
+                        opacities.add(opacity_pct)
                     continue
 
                 if prop == 'filter':
-                    findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": "filter"}))
+                    effects.add("shadow or effect" if any(x in normalized for x in ["shadow", "blur"]) else "filter")
                 else:
-                    findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": prop}))
+                    effects.add(prop)
+
+    for op in sorted(opacities):
+        findings.append(Finding(C05Outcomes.OPACITY, {"opacity": op}))
+
+    if effects:
+        if "shadow or effect" in effects:
+            findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": "shadow or effect"}))
+        elif "filter" in effects:
+            findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": "filter"}))
+        else:
+            for effect in sorted(effects):
+                findings.append(Finding(C05Outcomes.FORBIDDEN_EFFECT, {"effect": effect}))
 
     return findings
 
@@ -240,6 +275,7 @@ class C06Outcomes:
     FORBIDDEN_WEIGHT = Outcome("FORBIDDEN_WEIGHT", "Forbidden stroke weight", "stroke: {weight} px")
     NON_NUMERIC = Outcome("NON_NUMERIC", "Non-numeric stroke weight", "stroke: {weight}")
     MINIMAL_ICON = Outcome("MINIMAL_ICON", "Minimal icon", "stroke: {weight} px (review)")
+
 
 @register_rule(
     id="C06",
@@ -269,14 +305,17 @@ def rule_stroke_weight(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     unique_weights = set(strokes)
     forbidden = unique_weights - valid
     if forbidden:
-        findings.append(Finding(C06Outcomes.FORBIDDEN_WEIGHT, {"weight": ", ".join(map(str, sorted(forbidden)))}))
+        findings.append(Finding(C06Outcomes.FORBIDDEN_WEIGHT,
+                                {"weight": ", ".join(map(str, sorted(forbidden)))}))
 
     if len(strokes) == 1:
         weight = strokes[0]
         if weight in {10.0, 14.0}:
-             findings.append(Finding(C06Outcomes.MINIMAL_ICON, {"weight": weight}, Status.REVIEW))
+            findings.append(Finding(C06Outcomes.MINIMAL_ICON, {"weight": weight}, Status.REVIEW))
     elif any(w < 12.0 for w in unique_weights):
-         findings.append(Finding(C06Outcomes.MINIMAL_ICON, {"weight": ", ".join(map(str, sorted(unique_weights)))}, Status.REVIEW))
+        findings.append(Finding(C06Outcomes.MINIMAL_ICON,
+                                {"weight": ", ".join(map(str, sorted(unique_weights)))},
+                                Status.REVIEW))
 
     return findings
 
@@ -286,6 +325,7 @@ class C07Outcomes:
     IMPLICIT_FILL = Outcome("IMPLICIT_FILL", "Implicit fill", "fill: implicit black")
     UNAUTHORIZED_FILL = Outcome("UNAUTHORIZED_FILL", "Unauthorized fill", "fill: {fill}")
     HAS_FILL = Outcome("HAS_FILL", "Fill", "fill: yes")
+
 
 @register_rule(
     id="C07",
@@ -297,7 +337,7 @@ def rule_fill_color(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     if max_speed < Speed.MEDIUM or ctx.xml_tree is None:
         return []
 
-    allowed_colors = {'none', '#000000', '#000', 'black'}
+    allowed_colors = {'none', 'transparent', '#000000', '#000', 'black'}
     findings = []
 
     # The default SVG initial value for fill is technically 'black'
@@ -331,21 +371,21 @@ def rule_fill_color(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
         if current_fill not in {'none', 'transparent'}:
             has_fill = True
 
+        if current_fill not in allowed_colors:
+            findings.append(Finding(C07Outcomes.UNAUTHORIZED_FILL, {"fill": current_fill}))
+
         if local_stroke:
             if local_stroke not in allowed_colors:
                 findings.append(Finding(C07Outcomes.NON_BLACK_STROKE, {"color": local_stroke}))
 
             if not local_fill and current_fill == 'black':
-                findings.append(Finding(C07Outcomes.IMPLICIT_FILL, status=Status.REVIEW))
-
-            if current_fill not in allowed_colors:
-                findings.append(Finding(C07Outcomes.UNAUTHORIZED_FILL, {"fill": current_fill}))
+                findings.append(Finding(C07Outcomes.IMPLICIT_FILL))
 
         for child in el:
             stack.append((child, current_fill))
 
     if has_fill:
-        findings.append(Finding(C07Outcomes.HAS_FILL, status=Status.PASS))
+        findings.append(Finding(C07Outcomes.HAS_FILL))
 
     return findings
 
@@ -356,7 +396,9 @@ class RoundingOutcomes:
     MISSING_RECT_ROUND = Outcome("MISSING_RECT_ROUND", "Rect missing rounding", "rect: no rx")
     INVALID_RECT_ROUND = Outcome("INVALID_RECT_ROUND", "Invalid rect rounding", "rect rx: {rx}")
 
-@register_rule(id="C08", name="Rounding caps", outcomes=RoundingOutcomes, description="Validates 'round' stroke-linecap.")
+
+@register_rule(id="C08", name="Rounding caps", outcomes=RoundingOutcomes,
+               description="Validates 'round' stroke-linecap.")
 def rule_rounding_caps(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     if max_speed < Speed.MEDIUM or ctx.xml_tree is None:
         return []
@@ -384,7 +426,8 @@ def rule_rounding_caps(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return []
 
 
-@register_rule(id="C09", name="Rounding joints", outcomes=RoundingOutcomes, description="Validates 'round' stroke-linejoin.")
+@register_rule(id="C09", name="Rounding joints", outcomes=RoundingOutcomes,
+               description="Validates 'round' stroke-linejoin.")
 def rule_rounding_joints(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     if max_speed < Speed.MEDIUM or ctx.xml_tree is None:
         return []
@@ -402,7 +445,8 @@ def rule_rounding_joints(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     return []
 
 
-@register_rule(id="C10", name="Rounded corners", outcomes=RoundingOutcomes, description="Validates <rect> corner rounding.")
+@register_rule(id="C10", name="Rounded corners", outcomes=RoundingOutcomes,
+               description="Validates <rect> corner rounding.")
 def rule_rounded_corners(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     if max_speed < Speed.MEDIUM or ctx.xml_tree is None:
         return []
@@ -421,40 +465,52 @@ def rule_rounded_corners(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
             return [Finding(RoundingOutcomes.INVALID_RECT_ROUND, {"rx": rx})]
     return []
 
+
 # --- Quality Rules ---
 
-@register_rule(id="Q01", name="Adjacent stroke weight", outcomes={}, description="Checks for large differences in adjacent stroke weights.", category="Quality")
+@register_rule(id="Q01", name="Adjacent stroke weight", outcomes={},
+               description="Checks for large differences in adjacent stroke weights.",
+               category="Quality")
 def rule_placeholder_adjacent_stroke_weight(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     """Quality: [Placeholder] Checks for large differences in adjacent stroke weights."""
     return []
 
 
-@register_rule(id="Q02", name="Black spots", outcomes={}, description="Detects unintentional black spots from overlapping paths.", category="Quality")
+@register_rule(id="Q02", name="Black spots", outcomes={},
+               description="Detects unintentional black spots from overlapping paths.",
+               category="Quality")
 def rule_placeholder_black_spots(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     """Quality: [Placeholder] Detects unintentional black spots from overlapping paths."""
     return []
 
 
-@register_rule(id="Q03", name="Strokes too close", outcomes={}, description="Checks for strokes that are too close to each other.", category="Quality")
+@register_rule(id="Q03", name="Strokes too close", outcomes={},
+               description="Checks for strokes that are too close to each other.",
+               category="Quality")
 def rule_placeholder_strokes_too_close(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     """Quality: [Placeholder] Checks for strokes that are too close to each other."""
     return []
 
 
-@register_rule(id="Q04", name="Visual alignment", outcomes={}, description="Checks for visual alignment.", category="Quality")
+@register_rule(id="Q04", name="Visual alignment", outcomes={},
+               description="Checks for visual alignment.", category="Quality")
 def rule_placeholder_visual_alignment(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     """Quality: [Placeholder] Checks for visual alignment instead of bounding-box alignment."""
     return []
 
+
 class O01Outcomes:
     TOO_LARGE = Outcome("TOO_LARGE", "SVG too large", "size: {size} KB")
 
-@register_rule(id="O01", name="SVG size", outcomes=O01Outcomes, description="Flags SVGs larger than 3KB.", category="Optimization")
+
+@register_rule(id="O01", name="SVG size", outcomes=O01Outcomes,
+               description="Flags SVGs larger than 3KB.", category="Optimization")
 def rule_svg_size(ctx: CheckContext, max_speed: Speed) -> List[Finding]:
     size_kb = len(ctx.raw_content.encode('utf-8')) / 1024
     if size_kb > 3:
-        return [Finding(O01Outcomes.TOO_LARGE, {"size": round(size_kb, 1)}, Status.WARN)]
+        return [Finding(O01Outcomes.TOO_LARGE, {"size": round(size_kb, 1)}, Status.FAIL)]
     return []
+
 
 # --- Output System (Modular) ---
 
@@ -475,11 +531,12 @@ class OutputHandler(ABC):
     @abstractmethod
     def finish(self): pass
 
+
 class ConsoleOutput(OutputHandler):
     COLORS = {
-        Status.PASS: "\033[92m",   # Green
-        Status.WARN: "\033[93m",   # Yellow
-        Status.FAIL: "\033[91m",   # Red
+        Status.PASS: "\033[92m",  # Green
+        Status.WARN: "\033[93m",  # Yellow
+        Status.FAIL: "\033[91m",  # Red
         Status.REVIEW: "\033[95m",  # Magenta
         Status.EXEMPT: "\033[90m",  # Grey
     }
@@ -490,7 +547,8 @@ class ConsoleOutput(OutputHandler):
 
     def process(self, report: FileReport):
         if report.error:
-            print(f"{self.COLORS[Status.FAIL]}ERR{self.RESET} {report.file_path}: {report.error}", file=self.dest)
+            print(f"{self.COLORS[Status.FAIL]}ERR{self.RESET} {report.file_path}: {report.error}",
+                  file=self.dest)
             self.failed_count += 1
             return
 
@@ -507,7 +565,9 @@ class ConsoleOutput(OutputHandler):
                 continue
             color = self.COLORS.get(r.status, "")
             timing = f" ({r.duration_ms:.1f} ms)" if self.verbose else ""
-            print(f"  [{color}{r.status.name:6}{self.RESET}] [{r.category}: {r.id}] {r.message}{timing}", file=self.dest)
+            print(
+                f"  [{color}{r.status.name:6}{self.RESET}] [{r.category}: {r.id}] {r.message}{timing}",
+                file=self.dest)
 
     def finish(self):
         print(f"\nAnalysis complete. Failed files: {self.failed_count}", file=self.dest)
@@ -548,10 +608,12 @@ OUTPUT_FACTORIES: Dict[str, Type[OutputHandler]] = {
     'json': JsonOutput,
 }
 
+
 # --- Worker Logic ---
 
 
-def analyze_file(filepath_str: str, max_speed: Speed, exceptions: Dict[str, List[str]]) -> FileReport:
+def analyze_file(filepath_str: str, max_speed: Speed,
+                 exceptions: Dict[str, List[str]]) -> FileReport:
     path = Path(filepath_str)
     report = FileReport(filepath_str)
     filename = path.name
@@ -624,6 +686,7 @@ def analyze_file(filepath_str: str, max_speed: Speed, exceptions: Dict[str, List
 
     return report
 
+
 # --- Main ---
 
 
@@ -687,7 +750,6 @@ def main():
         sys.exit(0)
 
     out_stream = sys.stdout
-    out_stream = sys.stdout
     if args.output_file:
         out_stream = open(args.output_file, 'w', encoding='utf-8')
     handler = OUTPUT_FACTORIES[args.format](
@@ -705,7 +767,7 @@ def main():
         # We use a partial or a list comprehension approach
         futures = executor.map(
             analyze_file,
-            files, [max_speed]*len(files), [exceptions]*len(files),
+            files, [max_speed] * len(files), [exceptions] * len(files),
             chunksize=chunk_size
         )
 
